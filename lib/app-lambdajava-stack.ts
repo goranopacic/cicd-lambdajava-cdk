@@ -90,17 +90,17 @@ export class AppLambdaJavaStack extends cdk.Stack {
      */
 
     const rootApi = new apigateway.RestApi(this, 'DemoApi', {
-      restApiName: "demo-api",
+      //restApiName: "demo-api",
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS, //TODO promeni
       },
     });
 
     
-    const moadminApi = rootApi.root.addResource('demo');
+    const moadminApi = rootApi.root.addResource('demoapi');
 
     //region
-    const regionMethod = moadminApi.addResource('demo').addMethod('GET', new apigateway.LambdaIntegration(demoLambda));
+    const regionMethod = moadminApi.addResource('demo').addMethod('POST', new apigateway.LambdaIntegration(demoLambda));
 
   }
 }
