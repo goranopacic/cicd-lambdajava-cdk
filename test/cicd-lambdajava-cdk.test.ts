@@ -5,9 +5,10 @@ import CicdLambdajavaCdk = require('../lib/cicd-lambdajava-cdk-stack');
 test('Empty Stack', () => {
     const app = new cdk.App();
     // WHEN
-    const stack = new CicdLambdajavaCdk.CicdLambdajavaCdkStack(app, 'MyTestStack', {});
+    const stack = new CicdLambdajavaCdk.CicdLambdajavaCdkStack(app, 'MyTestStack');
     // THEN
     expectCDK(stack).to(matchTemplate({
       "Resources": {}
     }, MatchStyle.EXACT))
-});*/
+});
+*/
