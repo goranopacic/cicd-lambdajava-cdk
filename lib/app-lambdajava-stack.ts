@@ -76,13 +76,39 @@ export class AppLambdaJavaStack extends cdk.Stack {
       version: demoVersion
     });
       
-    new codedeploy.LambdaDeploymentGroup(this, 'regionDeploymentGroup', {
+    new codedeploy.LambdaDeploymentGroup(this, 'demoDeploymentGroup', {
       alias: demoAlias,
       deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
     });
 
 
+    // demo lambda
+    const dynamoLambda = new lambda.Function(this, 'dynamoLambda', {
+      description: `Generated on: ${new Date().toISOString()}`,
+      //vpc: vpc,
+      //securityGroups: [defaultSG],
+      runtime: lambda.Runtime.JAVA_11,
+      handler: 'io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest',
+      code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/dynamolambda-1.0-SNAPSHOT-runner.jar'),
+      /*environment: {
+        MOADMIN_DB_URL : dbMoUrl,
+        MOADMIN_DB_USER : dbMoUser,
+        MOADMIN_DB_PASS : dbMoPass
+      },*/
+      timeout: Duration.seconds(60),
+      memorySize: 1536
 
+    });
+    const dynamoLambdaVersion = demoLambda.addVersion(new Date().toISOString());
+    const dynamoLambdaAlias = new lambda.Alias(this, 'dynamoLambdaAlias', {
+      aliasName: 'Prod',
+      version: dynamoLambdaVersion
+    });
+      
+    new codedeploy.LambdaDeploymentGroup(this, 'dynamoLambdaDeploymentGroup', {
+      alias: dynamoLambdaAlias,
+      deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
+    });
 
 
      /**
@@ -99,8 +125,10 @@ export class AppLambdaJavaStack extends cdk.Stack {
     
     const moadminApi = rootApi.root.addResource('demoapi');
 
-    //region
-    const regionMethod = moadminApi.addResource('demo').addMethod('POST', new apigateway.LambdaIntegration(demoLambda));
+    //demo
+    const demoMethod = moadminApi.addResource('demo').addMethod('POST', new apigateway.LambdaIntegration(demoLambda));
+    //dynamo
+    const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
 
   }
 }
