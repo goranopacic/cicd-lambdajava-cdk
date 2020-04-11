@@ -11,10 +11,9 @@ const env = {
     account: app.node.tryGetContext('account') || process.env.CDK_INTEG_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT
   };
 
-const envProd = { account: '800732241315', region: 'eu-west-1' };
 
 new AppLambdaJavaStack(app, 'AppLambdaJavaStack',{
-    env: envProd
+    env: env
 });
 
 new CicdLambdajavaCdkStack(app, 'CicdLambdaJavaCdkStack', {
@@ -22,6 +21,6 @@ new CicdLambdajavaCdkStack(app, 'CicdLambdaJavaCdkStack', {
     eCdkRepoName: 'cicd-lambdajava-cdk',
     eCdkStackName: 'AppLambdaJavaStack',
     eServiceName: 'lambdajava',
-    env: envProd,
+    env: env,
     stage: 'prod'
 });
