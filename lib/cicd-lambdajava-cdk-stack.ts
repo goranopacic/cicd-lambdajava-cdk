@@ -171,7 +171,8 @@ export class CicdLambdajavaCdkStack extends cdk.Stack {
                 cache: {
                     'paths': [
                         '/root/.m2/**/*',
-                        '/root/.npm/**/*'
+                        '/root/.npm/**/*',
+                        '/usr/local/lib/node_modules/**/*'
                     ]
                 }
             })
