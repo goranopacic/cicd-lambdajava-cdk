@@ -81,8 +81,8 @@ export class AppLambdaJavaStack extends cdk.Stack {
       deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
     });
 
-
-    // demo lambda
+/*
+    // dynamo lambda
     const dynamoLambda = new lambda.Function(this, 'dynamoLambda', {
       description: `Generated on: ${new Date().toISOString()}`,
       //vpc: vpc,
@@ -90,11 +90,6 @@ export class AppLambdaJavaStack extends cdk.Stack {
       runtime: lambda.Runtime.JAVA_11,
       handler: 'io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest',
       code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/dynamotest-runner.jar'),
-      /*environment: {
-        MOADMIN_DB_URL : dbMoUrl,
-        MOADMIN_DB_USER : dbMoUser,
-        MOADMIN_DB_PASS : dbMoPass
-      },*/
       timeout: Duration.seconds(60),
       memorySize: 1536
 
@@ -109,7 +104,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       alias: dynamoLambdaAlias,
       deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
     });
-
+*/
 
      /**
      * API gateway
@@ -130,7 +125,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       proxy: false
     }));
     //dynamo
-    const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
+    //const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
 
   }
 }
