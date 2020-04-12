@@ -60,7 +60,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       //securityGroups: [defaultSG],
       runtime: lambda.Runtime.JAVA_11,
       handler: 'io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest',
-      code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/demo-1.0-SNAPSHOT-runner.jar'),
+      code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/demo-runner.jar'),
       /*environment: {
         MOADMIN_DB_URL : dbMoUrl,
         MOADMIN_DB_USER : dbMoUser,
@@ -89,7 +89,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       //securityGroups: [defaultSG],
       runtime: lambda.Runtime.JAVA_11,
       handler: 'io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest',
-      code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/dynamolambda-1.0-SNAPSHOT-runner.jar'),
+      code: lambda.Code.fromBucket(lambdaBucket,process.env.S3_LAMBDA_PREFIX! + '/dynamolambda-runner.jar'),
       /*environment: {
         MOADMIN_DB_URL : dbMoUrl,
         MOADMIN_DB_USER : dbMoUser,
