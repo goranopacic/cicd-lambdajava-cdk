@@ -81,7 +81,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
     });
 
-/*
+
     // dynamo lambda
     const dynamoLambda = new lambda.Function(this, 'dynamoLambda', {
       description: `Generated on: ${new Date().toISOString()}`,
@@ -94,7 +94,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       memorySize: 1536
 
     });
-    const dynamoLambdaVersion = demoLambda.addVersion(new Date().toISOString());
+    const dynamoLambdaVersion = dynamoLambda.addVersion(new Date().toISOString());
     const dynamoLambdaAlias = new lambda.Alias(this, 'dynamoLambdaAlias', {
       aliasName: 'Prod',
       version: dynamoLambdaVersion
@@ -104,7 +104,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       alias: dynamoLambdaAlias,
       deploymentConfig: codedeploy.LambdaDeploymentConfig.ALL_AT_ONCE,
     });
-*/
+
 
      /**
      * API gateway
@@ -125,7 +125,7 @@ export class AppLambdaJavaStack extends cdk.Stack {
       proxy: false
     }));
     //dynamo
-    //const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
+    const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
 
   }
 }
