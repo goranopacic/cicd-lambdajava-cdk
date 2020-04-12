@@ -126,7 +126,9 @@ export class AppLambdaJavaStack extends cdk.Stack {
     const moadminApi = rootApi.root.addResource('demoapi');
 
     //demo
-    const demoMethod = moadminApi.addResource('demo').addMethod('POST', new apigateway.LambdaIntegration(demoLambda));
+    const demoMethod = moadminApi.addResource('demo').addMethod('POST', new apigateway.LambdaIntegration(demoLambda,{
+      proxy: false
+    }));
     //dynamo
     const dynamoMethod = moadminApi.addResource('dynamo').addMethod('POST', new apigateway.LambdaIntegration(dynamoLambda));
 
